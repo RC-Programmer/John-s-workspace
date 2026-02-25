@@ -1,6 +1,7 @@
 # ─────────────────────────────────────────────────────────────────────────────
 # Local AI Agent System — requirements.txt
-# Python 3.10+  |  100% offline after first `ollama pull <model>`
+# Python 3.10–3.13 REQUIRED  (crewai does not yet support Python 3.14+)
+# Recommended: Python 3.12   |  100% offline after first `ollama pull <model>`
 # ─────────────────────────────────────────────────────────────────────────────
 
 # Core framework – [tools] extra pulls in crewai-tools automatically
