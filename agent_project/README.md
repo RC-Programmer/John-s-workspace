@@ -9,8 +9,8 @@ No OpenAI key. No bills. No data leaving your machine.
 
 | Requirement | Version | Notes |
 |---|---|---|
-| Python | 3.10+ | |
-| [Ollama](https://ollama.ai) | latest | `brew install ollama` or download from site |
+| Python | 3.10–3.13 (3.12 recommended) | **3.14+ not yet supported by crewai** |
+| [Ollama](https://ollama.ai) | latest | download from ollama.com |
 | A pulled model | — | `ollama pull qwen2.5:14b` |
 
 ---
