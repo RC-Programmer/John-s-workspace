@@ -7,6 +7,9 @@
 # Core framework – [tools] extra pulls in crewai-tools automatically
 crewai[tools]>=0.80.0
 
+# LiteLLM — required by CrewAI's LLM class for routing requests (e.g. to Ollama)
+litellm>=1.40.0
+
 # Ollama LLM backend (via LangChain, used by crewai's LLM wrapper under the hood)
 langchain-ollama>=0.2.0
 
