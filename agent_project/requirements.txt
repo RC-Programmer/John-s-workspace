@@ -7,7 +7,7 @@
 # Core framework – [tools] extra pulls in crewai-tools automatically
 crewai[tools]>=0.80.0
 
-# Ollama LLM backend (via LangChain, used by crewai's LLM wrapper under the hood)
+# Ollama LLM backend (via LangChain) — used directly to avoid litellm/openai version conflicts
 langchain-ollama>=0.2.0
 
 # Free web search — no API key required

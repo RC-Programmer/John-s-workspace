@@ -19,7 +19,8 @@ Current roster:
 
 from __future__ import annotations
 
-from crewai import Agent, LLM
+from crewai import Agent
+from langchain_ollama import ChatOllama
 
 from tools import RESEARCHER_TOOLS, WRITER_TOOLS
 
@@ -33,26 +34,26 @@ def build_llm(
     base_url: str = "http://localhost:11434",
     temperature: float = 0.7,
     max_tokens: int = 4096,
-) -> LLM:
+) -> ChatOllama:
     """
-    Return a CrewAI LLM object pointed at a local Ollama instance.
+    Return a LangChain ChatOllama instance pointed at a local Ollama server.
 
-    The 'ollama/' prefix tells litellm (which CrewAI uses under the hood) to
-    route the request to the Ollama HTTP API instead of OpenAI.
+    Uses langchain-ollama directly to avoid the litellm version conflict with
+    crewai 1.9.x. CrewAI agents accept any LangChain-compatible LLM.
 
     Args:
-        model       : Ollama model tag, prefixed with 'ollama/'
-                      e.g. 'ollama/qwen2.5:14b', 'ollama/llama3.2:11b',
-                           'ollama/deepseek-r1:14b'
+        model       : Ollama model tag; the 'ollama/' prefix is stripped
+                      automatically.  e.g. 'ollama/qwen2.5:14b'
         base_url    : Ollama server URL (default: local Ollama)
         temperature : 0.0 = deterministic, 1.0 = creative
-        max_tokens  : max tokens in a single LLM response
+        max_tokens  : max tokens in a single LLM response (num_predict)
     """
-    return LLM(
-        model=model,
+    model_name = model.removeprefix("ollama/")
+    return ChatOllama(
+        model=model_name,
         base_url=base_url,
         temperature=temperature,
-        max_tokens=max_tokens,
+        num_predict=max_tokens,
     )
 
 
@@ -64,7 +65,7 @@ def build_llm(
 # run experiments without touching this file.
 # ─────────────────────────────────────────────────────────────────────────────
 
-def create_researcher(llm: LLM) -> Agent:
+def create_researcher(llm: ChatOllama) -> Agent:
     """
     The Researcher: digs up accurate, up-to-date information.
 
@@ -99,7 +100,7 @@ def create_researcher(llm: LLM) -> Agent:
     )
 
 
-def create_writer(llm: LLM) -> Agent:
+def create_writer(llm: ChatOllama) -> Agent:
     """
     The Writer: transforms research notes into polished output.
 
@@ -132,7 +133,7 @@ def create_writer(llm: LLM) -> Agent:
     )
 
 
-def create_reviewer(llm: LLM) -> Agent:
+def create_reviewer(llm: ChatOllama) -> Agent:
     """
     (Optional) The Reviewer: quality-checks the writer's output.
 
