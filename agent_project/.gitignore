@@ -1,9 +1,0 @@
-.env
-.venv/
-__pycache__/
-*.pyc
-output/
-memory/
-*.egg-info/
-dist/
-.DS_Store
